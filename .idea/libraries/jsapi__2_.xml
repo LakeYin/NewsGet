@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jsapi (2)">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/lib/jsapi.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

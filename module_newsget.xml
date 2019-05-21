@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_newsget" default="compile.module.newsget">
+  <dirname property="module.newsget.basedir" file="${ant.file.module_newsget}"/>
+  
+  <property name="module.jdk.home.newsget" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.newsget" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.newsget" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.newsget" value="-encoding UTF-8 -source 11 -target 11 ${compiler.args}"/>
+  
+  <property name="newsget.output.dir" value="${module.newsget.basedir}/out/production/NewsGet"/>
+  <property name="newsget.testoutput.dir" value="${module.newsget.basedir}/out/test/NewsGet"/>
+  
+  <path id="newsget.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="newsget.module.production.classpath">
+    <path refid="${module.jdk.classpath.newsget}"/>
+    <path refid="library.java-json.classpath"/>
+    <path refid="library.java-json_(2).classpath"/>
+    <path refid="library.jsapi.classpath"/>
+    <path refid="library.java-json_(3).classpath"/>
+    <path refid="library.jsapi_(2).classpath"/>
+    <path refid="library.freetts.classpath"/>
+    <path refid="library.freetts-jsapi10.classpath"/>
+    <path refid="library.en_us.classpath"/>
+    <path refid="library.cmu_us_kal.classpath"/>
+    <path refid="library.cmudict04.classpath"/>
+    <path refid="library.cmulex.classpath"/>
+    <path refid="library.cmutimelex.classpath"/>
+  </path>
+  
+  <path id="newsget.runtime.production.module.classpath">
+    <pathelement location="${newsget.output.dir}"/>
+    <path refid="library.java-json.classpath"/>
+    <path refid="library.java-json_(2).classpath"/>
+    <path refid="library.jsapi.classpath"/>
+    <path refid="library.java-json_(3).classpath"/>
+    <path refid="library.jsapi_(2).classpath"/>
+    <path refid="library.freetts.classpath"/>
+    <path refid="library.freetts-jsapi10.classpath"/>
+    <path refid="library.en_us.classpath"/>
+    <path refid="library.cmu_us_kal.classpath"/>
+    <path refid="library.cmudict04.classpath"/>
+    <path refid="library.cmulex.classpath"/>
+    <path refid="library.cmutimelex.classpath"/>
+  </path>
+  
+  <path id="newsget.module.classpath">
+    <path refid="${module.jdk.classpath.newsget}"/>
+    <pathelement location="${newsget.output.dir}"/>
+    <path refid="library.java-json.classpath"/>
+    <path refid="library.java-json_(2).classpath"/>
+    <path refid="library.jsapi.classpath"/>
+    <path refid="library.java-json_(3).classpath"/>
+    <path refid="library.jsapi_(2).classpath"/>
+    <path refid="library.freetts.classpath"/>
+    <path refid="library.freetts-jsapi10.classpath"/>
+    <path refid="library.en_us.classpath"/>
+    <path refid="library.cmu_us_kal.classpath"/>
+    <path refid="library.cmudict04.classpath"/>
+    <path refid="library.cmulex.classpath"/>
+    <path refid="library.cmutimelex.classpath"/>
+  </path>
+  
+  <path id="newsget.runtime.module.classpath">
+    <pathelement location="${newsget.testoutput.dir}"/>
+    <pathelement location="${newsget.output.dir}"/>
+    <path refid="library.java-json.classpath"/>
+    <path refid="library.java-json_(2).classpath"/>
+    <path refid="library.jsapi.classpath"/>
+    <path refid="library.java-json_(3).classpath"/>
+    <path refid="library.jsapi_(2).classpath"/>
+    <path refid="library.freetts.classpath"/>
+    <path refid="library.freetts-jsapi10.classpath"/>
+    <path refid="library.en_us.classpath"/>
+    <path refid="library.cmu_us_kal.classpath"/>
+    <path refid="library.cmudict04.classpath"/>
+    <path refid="library.cmulex.classpath"/>
+    <path refid="library.cmutimelex.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.newsget">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.newsget">
+    <patternset refid="excluded.from.module.newsget"/>
+  </patternset>
+  
+  <path id="newsget.module.sourcepath">
+    <dirset dir="${module.newsget.basedir}">
+      <include name="src/main"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.newsget" depends="compile.module.newsget.production,compile.module.newsget.tests" description="Compile module NewsGet"/>
+  
+  <target name="compile.module.newsget.production" depends="register.custom.compilers" description="Compile module NewsGet; production classes">
+    <mkdir dir="${newsget.output.dir}"/>
+    <javac2 destdir="${newsget.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.newsget}/javac">
+      <compilerarg line="${compiler.args.newsget}"/>
+      <bootclasspath refid="newsget.module.bootclasspath"/>
+      <classpath refid="newsget.module.production.classpath"/>
+      <src refid="newsget.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.newsget"/>
+    </javac2>
+    
+    <copy todir="${newsget.output.dir}">
+      <fileset dir="${module.newsget.basedir}/src/main">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.newsget.tests" depends="register.custom.compilers,compile.module.newsget.production" description="compile module NewsGet; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.newsget" description="cleanup module">
+    <delete dir="${newsget.output.dir}"/>
+    <delete dir="${newsget.testoutput.dir}"/>
+  </target>
+</project>
